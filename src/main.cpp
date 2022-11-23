@@ -99,22 +99,26 @@ std::string CallBackMessageListener(string message)
     string arg9 = getValue(message, ' ', 9);
     string arg10 = getValue(message, ' ', 10);
 
-    //getNomFour
-    std::string nomDuFour =  "Four9394";
-    if (string(actionToDo.c_str()).compare(string("askNomFour ")) == 0) {
-           return(nomDuFour.c_str()); 
-           }
-  
-
     // fct callback
-    if (string(actionToDo.c_str()).compare(string("button")) == 0) {
+    if (string(actionToDo.c_str()).compare(string("button")) == 0)
+    {
         Serial.println("buttonActivated");
-         return(String("Button was activated").c_str());
+        return(String("Button was activated").c_str());
+    }
+
+    // callback getAllWoodOptions
+    if (string(actionToDo.c_str()).compare(string("button")) == 0)
+    {
+        if (string(arg1.c_str()).compare(string("getAllWoodOptions")) == 0)
+        {
+            Serial.println("getAllWoodOptions");
+            return(String("getAllWoodOptions").c_str());
         }
+    }
    
     std::string result = "";
     return result;
-    }
+}
 
 void Connect_WiFi()
 {
