@@ -71,6 +71,11 @@ const char* ssid = "ESP32-Soft-accessPoint";
 const char* password = "microcontrollerslab";
 WiFiServer server(80);
 
+#include "TemperatureStub.h"
+#define DHTPIN  15   // Pin utilisée par le senseur DHT11 / DHT22
+#define DHTTYPE DHT22  //Le type de senseur utilisé (mais ce serait mieux d'avoir des DHT22 pour plus de précision)
+TemperatureStub *temperatureStub = NULL;
+
 //Pour la gestion du serveur ESP32
 #include "MyServer.h"
 MyServer *myServer = NULL;
@@ -83,41 +88,29 @@ String ssIDRandom;
 //fonction statique qui permet aux objets d'envoyer des messages (callBack) 
 //  arg0 : Action 
 // arg1 ... : Parametres
-std::string CallBackMessageListener(string message)
-{
+std::string CallBackMessageListener(string message) {
     while(replaceAll(message, std::string("  "), std::string(" ")));
     //Décortiquer le message
-    string actionToDo = getValue(message, ' ', 0);
-    string arg1 = getValue(message, ' ', 1);
+    string arg1 = getValue(message, ' ', 0);
+    float temperature = temperatureStub->getTemperature();
+    String temp = (String)temperature;
+    if(string(arg1.c_str()).compare(string("temperature")) == 0){
+    return (temp.c_str());
+    }
+
     string arg2 = getValue(message, ' ', 2);
     string arg3 = getValue(message, ' ', 3);
     string arg4 = getValue(message, ' ', 4);
     string arg5 = getValue(message, ' ', 5);
-    string arg6 = getValue(message, ' ', 6);
-    string arg7 = getValue(message, ' ', 7);
-    string arg8 = getValue(message, ' ', 8);
-    string arg9 = getValue(message, ' ', 9);
-    string arg10 = getValue(message, ' ', 10);
 
-    // fct callback
-    if (string(actionToDo.c_str()).compare(string("button")) == 0)
-    {
-        Serial.println("buttonActivated");
-        return(String("Button was activated").c_str());
-    }
+    string actionToDo = getValue(message, ' ', 0);
+    std::string nomDuFour = "Four9394";
+     if(string(actionToDo.c_str()).compare(string("askNomFour")) == 0) {
+    return(temp.c_str()); }
 
-    // callback getAllWoodOptions
-    if (string(actionToDo.c_str()).compare(string("button")) == 0)
-    {
-        if (string(arg1.c_str()).compare(string("getAllWoodOptions")) == 0)
-        {
-            Serial.println("getAllWoodOptions");
-            return(String("getAllWoodOptions").c_str());
-        }
-    }
-   
-    std::string result = "";
-    return result;
+
+std::string result = "";
+return result;
 }
 
 void Connect_WiFi()
@@ -162,6 +155,10 @@ char strToPrint[128];
     myServer = new MyServer(80);
     myServer->initAllRoutes();
     myServer->initCallback(&CallBackMessageListener);
+
+    // ----------- Senseur de température ----------------
+    temperatureStub = new TemperatureStub();
+    temperatureStub->init(DHTPIN, DHTTYPE);
 
  }
 

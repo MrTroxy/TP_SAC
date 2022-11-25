@@ -6,7 +6,8 @@ var temperature;
 
 // Appel un GET sur le serveur pour récupérer des données d'un API REST | Fonction getAllWood
 window.addEventListener("load", getAllWoodOptions());
-function getAllWoodOptions(){
+function getAllWoodOptions()
+{
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function()
         {
@@ -24,22 +25,25 @@ function getAllWoodOptions(){
                     }
                     
                     document.getElementById("typeBois_ListBox_Select").addEventListener("change", getCaracteristiqueBois);
+                    document.getElementById("typeBois_ListBox_Select").addEventListener("load", getFromESP_getWoodCaracteristique);
                 }
             }
         };
+
     xhttp.open("GET", "getAllWoodOptions", true);
     xhttp.send();
 }
 
 setInterval(function getFromEsp_TemperatureSensor()
-{ //
+{
     var xhttp = new XMLHttpRequest();
    
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
+    xhttp.onreadystatechange = function()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
             document.getElementById("temp").innerHTML = this.responseText;
             temperature = this.responseText;
-            
         }
     };
     xhttp.open("GET", "getTemperatureSensor", true);
@@ -62,35 +66,38 @@ setInterval(function getFromEsp_TemperatureSensor()
 
        // Fonction récupérer les infos de l'API Bois
 
-function getInfoWood()
+// Fonction qui permet d'afficher les caractéristiques du bois choisi en envoyant un GET sur le serveur avec le nom du bois choisi
+function getFromESP_getWoodCaracteristique()
 {
-    var x = document.getElementById('typeBois_ListBox_Select');
-    
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function()
     {
         if (this.readyState == 4 && this.status == 200)
         {
-            var arrayOfStrings = JSON.parse(this.responseText);
-            for (i = 0; i < arrayOfStrings.results.length; i++)
+            console.log(this.responseText);
+            var arrayOfStrings = this.responseText.split("&");
+            console.log(arrayOfStrings);
+            for (var i = 0; i < arrayOfStrings.length; i++)
             {
-                if (x.value == arrayOfStrings.results[i].id)
-                {
-                    boisChoisi = arrayOfStrings.results[i];
-                    document.getElementById('nom').innerHTML = arrayOfStrings.results[i].bois;
-                    document.getElementById('nom2').innerHTML = arrayOfStrings.results[i].bois;
-                    document.getElementById('typeBois').innerHTML = arrayOfStrings.results[i].typeBois;
-                    document.getElementById('origine').innerHTML = arrayOfStrings.results[i].origine;
-                    document.getElementById('tempsSechage').innerHTML = arrayOfStrings.results[i].tempsSechage;
-                    document.getElementById('tempsSechage2').innerHTML = arrayOfStrings.results[i].tempsSechage;
-                    document.getElementById('tempMin').innerHTML = arrayOfStrings.results[i].tempMin;
-                    document.getElementById('tempMin2').innerHTML = arrayOfStrings.results[i].tempMin;
-                }
-             }
-         }
-    }
-    xhttp.open("GET", "getAllWoodOptions", true);
-    xhttp.send();
+                value = arrayOfStrings[i];
+                ident = arrayOfStrings[i+1];
+                console.log("Value : " + value);
+                console.log("Ident : " + ident);
+
+                if (value == "Bois") { document.getElementById("nom").innerHTML = ident; }
+                if (value == "Type") { document.getElementById("type").innerHTML = ident; }
+                if (value == "Origin") { document.getElementById("origine").innerHTML = ident; }
+                if (value == "Sechage") { document.getElementById("sechage").innerHTML = ident + " Celsius"; }
+                if (value == "Temps") { document.getElementById("temps").innerHTML = ident + " secondes"; }
+            }
+        }
+    };
+
+    var sel = document.getElementById("typeBois_ListBox_Select");
+    var params = String("wood") + String("=") + String(sel.options[sel.selectedIndex].text);
+    xhttp.open("POST", "getWoodCaracteristiques", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(params);
 }
 
 // Fonction pour démarrer le compte à rebour du four

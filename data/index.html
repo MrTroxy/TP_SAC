@@ -12,7 +12,7 @@
 
 <h1> Type de Bois</h1>
 
-<SELECT id="typeBois_ListBox_Select" onchange="getInfoWood();" size="1" class="choix">
+<SELECT id="typeBois_ListBox_Select" onchange="getFromESP_getWoodCaracteristique()" size="1" class="choix">
 </SELECT>
 
 <h1>Caracteristiques</h1>
@@ -21,15 +21,13 @@
 <h2> 
     Bois : <span id="nom"></span>
 <br> 
-    Type : <span id="typeBois"></span>
+    Type : <span id="type"></span>
 <br>
     Origine : <span id="origine"></span>
 <br> 
-    Temps de sechage: <span id="tempsSechage"></span>
+    Temps de sechage : <span id="temps"></span>  
 <br> 
-    Temperature minimum : <span id="tempMin"></span>  
-<br> 
-    Nom Systeme: <span id="nomSysteme"></span>
+    Temperature de sechage : <span id="sechage"></span>
 </h2>
 </div>
 <h3> Controle du four de sechage </h3>
@@ -41,7 +39,7 @@
     <div class="center">
     <p> Temperature du Four </p>
     <br>
-    <p class="celcius" id="temp"></p>
+    <p class="celcius" id="temp">Temperature</p>
     <br>
     <button id="four" onclick="demarrageFour();" class="box">Demarrage du four</button>
     </div>
@@ -61,9 +59,9 @@
 <script type = "text/javascript" src="script.js">
 
     getFromESP_getAllWoodOptions();
-    getInfoWood();
     demarrageFour();
     getFromEsp_TemperatureSensor();
+    getFromESP_getWoodCaracteristique();
 
 </script>
 

@@ -106,6 +106,78 @@ void MyServer::initAllRoutes() {
             
             http.end(); 
     });
+
+    this->on("/getWoodCaracteristiques", HTTP_POST, [](AsyncWebServerRequest *request)
+    {
+        Serial.println("getWoodCaracteristiques...");
+        String wood;
+
+        if (request->hasParam("wood", true))
+        {
+            wood = request->getParam("wood", true)->value();
+            Serial.println("wood1: " + wood);
+        }
+        else
+        {
+            Serial.println("Erreur de parametre");
+        }
+        
+        HTTPClient http;
+        String woodApiRestAddress = "http://api.qc-ca.ovh:2223/api/woods/getWood/";
+        woodApiRestAddress += wood;
+        http.begin(woodApiRestAddress);
+        http.addHeader("Authorization", "Bearer 2e550451f21d19dc726b54e574d6d6b76665ade19f703af2a26384cf2d3adf9a8e9a5e28270471fa2a6a3c1982aafa2be5ff14179cbfbf299a189846dfc45101");
+
+        // Specify content-type header
+        http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        int httpResponseCode = http.GET();
+        Serial.println("httpResponseCode: " + String(httpResponseCode));
+
+        String response;
+        if (httpResponseCode > 0)
+        {
+            response = http.getString();
+            Serial.println("response: " + response);
+        }
+        else
+        {
+            Serial.println("Error on HTTP request");
+        }
+        http.end();
+
+        DynamicJsonDocument doc(2048);
+        deserializeJson(doc, response);
+        String tempToSend;
+        for (JsonObject elem : doc.as<JsonArray>())
+        {
+            String woodName = elem["name"];
+            String woodType = elem["type"];
+            String woodOrigin = elem["origin"];
+            String WoodDryingTime = elem["dryingTime"];
+            String woodTemperature = elem["temperature"];
+
+            tempToSend+= String("Bois") + String("&") + woodName + String("&");
+            tempToSend+= String("Type") + String("&") + woodType + String("&");
+            tempToSend+= String("Origin") + String("&") + woodOrigin + String("&");
+            tempToSend+= String("Sechage") + String("&") + WoodDryingTime + String("&");
+            tempToSend+= String("Temps") + String("&") + woodTemperature + String("&");
+            Serial.println("tempToSend: " + tempToSend);
+
+            std::string repString = "";
+            String stringToSend = "tellCaracteristiques ";
+            stringToSend += String("Bois") + String(" ") + woodName + String(" ");
+            stringToSend += String("Type") + String(" ") + woodType + String(" ");
+            stringToSend += String("Origin") + String(" ") + woodOrigin + String(" ");
+            stringToSend += String("Sechage") + String(" ") + WoodDryingTime + String(" ");
+            stringToSend += String("Temps") + String(" ") + woodTemperature + String(" ");
+
+            if (ptrToCallBackFunction) repString = (*ptrToCallBackFunction)(stringToSend.c_str());
+
+            request->send(200, "text/plain", tempToSend);
+            break;
+        }
+    });
     
 
     // Route fonction pour récupérer le nom du du FOUR
