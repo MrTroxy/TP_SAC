@@ -87,8 +87,17 @@ function getFromESP_getWoodCaracteristique()
                 if (value == "Bois") { document.getElementById("nom").innerHTML = ident; }
                 if (value == "Type") { document.getElementById("type").innerHTML = ident; }
                 if (value == "Origin") { document.getElementById("origine").innerHTML = ident; }
-                if (value == "Sechage") { document.getElementById("sechage").innerHTML = ident + " Celsius"; }
-                if (value == "Temps") { document.getElementById("temps").innerHTML = ident + " secondes"; }
+                if (value == "Sechage")
+                {
+                    document.getElementById("sechage").innerHTML = ident;
+                    document.getElementById("temperatureMinInfo").innerHTML = ident;
+                }
+                if (value == "Temps")
+                {
+                    document.getElementById("temps").innerHTML = ident;
+                    document.getElementById("tempsSechageInfo").innerHTML = ident;
+                }
+
             }
         }
     };
@@ -106,20 +115,27 @@ function demarrageFour()
 {
     var i = 0;
     var temp = parseInt(temperature);
-    console.log(boisChoisi);
-    if( temp >= boisChoisi.tempMin) {
-       var timer = setInterval(function(){
-            i++
-            document.getElementById("timer").innerHTML = i;
-            console.log(i);
-            if(i == boisChoisi.tempsSechage){
-                clearInterval(timer);
-            }
-            
+    if (temp >= document.getElementById("sechage").textContent)
+    {
+        var timer = setInterval(function()
+        {
+                i++
+                document.getElementById("timer").innerHTML = i;
+                console.log(i);
+                if (i == document.getElementById("temps").textContent || document.getElementById('four').clicked == true)
+                {
+                    clearInterval(timer);
+                    alert("Le sechage est finit ! ")
+                }
+                else if (document.getElementById('four').clicked == true)
+                {
+                    clearInterval(timer);
+                }
         }, 1000);
     }
     else
     {
-        console.log('non');
+        alert("La temperature du four n'est pas assez elevee! ");
     }
+
 };
