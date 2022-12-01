@@ -65,6 +65,23 @@ using namespace std;
 WiFiManager wm;
 #define WEBSERVER_H
 
+#include <Wire.h>
+#include <MyOled.h>
+#include <MyOledView.h>
+#include <MyOledViewWifiAp.h>
+#include <MyOledViewErrorWifiConnexion.h>
+#include <MyOledViewWorking.h>
+#include <MyOledViewInitialisation.h>
+#include <MyOledViewWorking.h>
+#include <MyOledViewWorkingOFF.h>
+#include <MyOledViewWorkingCold.h>
+#include <MyOledViewWorkingHeat.h>
+
+
+#define GPIO_PIN_LED_HEAT_YELLOW 6  
+#define GPIO_PIN_LED_HEAT_GREEN 7 
+#define GPIO_PIN_LED_HEAT_RED 8 
+
 #include "WiFi.h"
 
 const char* ssid = "ESP32-Soft-accessPoint";
@@ -75,6 +92,14 @@ WiFiServer server(80);
 #define DHTPIN  15   // Pin utilisée par le senseur DHT11 / DHT22
 #define DHTTYPE DHT22  //Le type de senseur utilisé (mais ce serait mieux d'avoir des DHT22 pour plus de précision)
 TemperatureStub *temperatureStub = NULL;
+
+// pour l'affichage
+#define SCREEN_WIDTH 128      // taille de l'écran en longeur, en pixel
+#define SCREEN_HEIGHT 64      // taille de l'écran en largeur, en pixel
+#define OLED_RESET 4          // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_I2C_ADDRESS 0x3C // Adresse I2C de l'écran Oled
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+int frame_delay = 15;
 
 //Pour la gestion du serveur ESP32
 #include "MyServer.h"
@@ -160,6 +185,12 @@ char strToPrint[128];
     temperatureStub = new TemperatureStub();
     temperatureStub->init(DHTPIN, DHTTYPE);
 
+    // ----------- Initialisation des LED statuts ----------------
+    //pinMode(GPIO_PIN_LED_HEAT_RED, OUTPUT);
+    //pinMode(GPIO_PIN_LED_HEAT_GREEN, OUTPUT);
+    //pinMode(GPIO_PIN_LED_HEAT_RED, OUTPUT);
+    
+    
  }
 
 void loop() {
