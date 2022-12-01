@@ -94,12 +94,14 @@ function getFromESP_getWoodCaracteristique()
                 }
                 if (value == "Temps")
                 {
+                    document.getElementById("timer").innerHTML = "0";
                     document.getElementById("temps").innerHTML = ident;
                     document.getElementById("tempsSechageInfo").innerHTML = ident;
                 }
 
             }
             document.getElementById("caracteristiquesBois").style.display = "block";
+            document.getElementById("cercleStatut").style.backgroundColor = "red";
         }
     };
 
@@ -117,7 +119,7 @@ function demarrageFour()
     var i = 0;
     var temp = parseInt(temperature);
 
-    document.getElementById("cercleStatut").style.backgroundColor = "yellow";
+    document.getElementById("cercleStatut").style.backgroundColor = "orange";
     if (temp >= document.getElementById("sechage").textContent)
     {
         var timer = setInterval(function()
@@ -128,9 +130,9 @@ function demarrageFour()
                 console.log(i);
                 if (i == document.getElementById("temps").textContent || document.getElementById('four').clicked == true)
                 {
-                    clearInterval(timer);
                     document.getElementById("cercleStatut").style.backgroundColor = "green";
-                    alert("Le sechage est finit ! ")
+                    clearInterval(timer);
+                    alert("Le sechage est finit ! ");
                 }
                 else if (document.getElementById('four').clicked == true)
                 {
