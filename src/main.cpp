@@ -77,10 +77,9 @@ WiFiManager wm;
 #include <MyOledViewWorkingCold.h>
 #include <MyOledViewWorkingHeat.h>
 
-
-#define GPIO_PIN_LED_HEAT_YELLOW 6  
-#define GPIO_PIN_LED_HEAT_GREEN 7 
-#define GPIO_PIN_LED_HEAT_RED 8 
+#define GPIO_PIN_LED_HEAT_YELLOW 12
+#define GPIO_PIN_LED_HEAT_GREEN 14
+#define GPIO_PIN_LED_HEAT_RED 27
 
 #include "WiFi.h"
 
@@ -100,6 +99,7 @@ TemperatureStub *temperatureStub = NULL;
 #define OLED_I2C_ADDRESS 0x3C // Adresse I2C de l'écran Oled
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 int frame_delay = 15;
+MyOled *myOled = NULL;
 
 //Pour la gestion du serveur ESP32
 #include "MyServer.h"
@@ -186,15 +186,19 @@ char strToPrint[128];
     temperatureStub->init(DHTPIN, DHTTYPE);
 
     // ----------- Initialisation des LED statuts ----------------
-    //pinMode(GPIO_PIN_LED_HEAT_RED, OUTPUT);
-    //pinMode(GPIO_PIN_LED_HEAT_GREEN, OUTPUT);
-    //pinMode(GPIO_PIN_LED_HEAT_RED, OUTPUT);
-    
+    pinMode(GPIO_PIN_LED_HEAT_YELLOW, OUTPUT);
+    pinMode(GPIO_PIN_LED_HEAT_GREEN, OUTPUT);
+    pinMode(GPIO_PIN_LED_HEAT_RED, OUTPUT);
+
+    myOled = new MyOled(&Wire, OLED_I2C_ADDRESS, SCREEN_HEIGHT, SCREEN_WIDTH);
+    myOled->init();
     
  }
 
-void loop() {
-  }
+void loop()
+{
+
+}
 
 
 /***************************************************************************************************************/
