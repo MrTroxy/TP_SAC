@@ -21,8 +21,8 @@
 
 
 
-#ifndef MYOLEDVIEWWORKING.h 
-#define MYOLEDVIEWWORKING.h 
+#ifndef MYOLEDVIEWWORKING
+#define MYOLEDVIEWWORKING
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <MyOledView.h>

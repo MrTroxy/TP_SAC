@@ -21,8 +21,8 @@
 **/
 
 
-#ifndef MYOLEDVIEWWORKINGHEAT.h
-#define MYOLEDVIEWWORKINGHEAT .h
+#ifndef MYOLEDVIEWWORKINGHEAT
+#define MYOLEDVIEWWORKINGHEAT
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <MyOledViewWorking.h>

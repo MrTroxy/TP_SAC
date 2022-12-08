@@ -77,9 +77,10 @@ WiFiManager wm;
 #include <MyOledViewWorkingCold.h>
 #include <MyOledViewWorkingHeat.h>
 
-#define GPIO_PIN_LED_HEAT_YELLOW 12
-#define GPIO_PIN_LED_HEAT_GREEN 14
-#define GPIO_PIN_LED_HEAT_RED 27
+//Définition des trois leds de statut
+#define GPIO_PIN_LED_YELLOW   12 // Led jaune sur la pin GPIO12
+#define GPIO_PIN_LED_GREEN     14 // Led verte sur la pin GPIO14
+#define GPIO_PIN_LED_RED  27 // Led rouge sur la pin GPIO27
 
 #include "WiFi.h"
 
@@ -113,14 +114,19 @@ String ssIDRandom;
 //fonction statique qui permet aux objets d'envoyer des messages (callBack) 
 //  arg0 : Action 
 // arg1 ... : Parametres
-std::string CallBackMessageListener(string message) {
-    while(replaceAll(message, std::string("  "), std::string(" ")));
+std::string CallBackMessageListener(string message)
+{
+    while (replaceAll(message, std::string("  "), std::string(" ")));
     //Décortiquer le message
     string arg1 = getValue(message, ' ', 0);
-    float temperature = temperatureStub->getTemperature();
-    String temp = (String)temperature;
-    if(string(arg1.c_str()).compare(string("temperature")) == 0){
-    return (temp.c_str());
+    
+
+    if (string(arg1.c_str()).compare(string("temperature")) == 0)
+    {
+        float temperature = temperatureStub->getTemperature();
+        String temp = (String)temperature;
+
+        return (temp.c_str());
     }
 
     string arg2 = getValue(message, ' ', 2);
@@ -129,9 +135,12 @@ std::string CallBackMessageListener(string message) {
     string arg5 = getValue(message, ' ', 5);
 
     string actionToDo = getValue(message, ' ', 0);
-    std::string nomDuFour = "Four9394";
-     if(string(actionToDo.c_str()).compare(string("askNomFour")) == 0) {
-    return(temp.c_str()); }
+    string nomDuFour = "Four #1";
+    
+    if(string(actionToDo.c_str()).compare(string("askNomFour")) == 0)
+    {
+        return(nomDuFour.c_str());
+    }
 
 
 std::string result = "";
@@ -186,10 +195,15 @@ char strToPrint[128];
     temperatureStub->init(DHTPIN, DHTTYPE);
 
     // ----------- Initialisation des LED statuts ----------------
-    pinMode(GPIO_PIN_LED_HEAT_YELLOW, OUTPUT);
-    pinMode(GPIO_PIN_LED_HEAT_GREEN, OUTPUT);
-    pinMode(GPIO_PIN_LED_HEAT_RED, OUTPUT);
+    pinMode(GPIO_PIN_LED_YELLOW, OUTPUT);
+    pinMode(GPIO_PIN_LED_GREEN, OUTPUT);
+    pinMode(GPIO_PIN_LED_RED, OUTPUT);
 
+    digitalWrite(GPIO_PIN_LED_YELLOW, LOW);
+    digitalWrite(GPIO_PIN_LED_GREEN, LOW);
+    digitalWrite(GPIO_PIN_LED_RED, HIGH);
+
+    // ----------- Initialisation de l'écran Oled ----------------
     myOled = new MyOled(&Wire, OLED_I2C_ADDRESS, SCREEN_HEIGHT, SCREEN_WIDTH);
     myOled->init();
     
