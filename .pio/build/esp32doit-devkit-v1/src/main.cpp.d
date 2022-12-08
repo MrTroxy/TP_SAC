@@ -258,11 +258,12 @@
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src/SPI.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal-spi.h \
  lib/Adafruit_BusIO-master/Adafruit_I2CDevice.h src/MyOledView.h \
- src/MyOledViewWifiAp.h src/MyOledViewErrorWifiConnexion.h \
+ src/MyOledViewWorkingWifiAp.h src/MyOledViewErrorWifiConnexion.h \
  src/MyOledViewWorking.h src/MyOledViewInitialisation.h \
- src/MyOledViewWorkingOFF.h src/MyOledViewWorkingCold.h \
- src/MyOledViewWorkingHeat.h src/TemperatureStub.h lib/DHT/DHT.h \
- src/MyServer.h lib/AsyncTCP-esphome-1.2.1/src/AsyncTCP.h \
+ src/MyOledViewWorkingOFF.h src/MyOledViewWorking.h \
+ src/MyOledViewWorkingCold.h src/MyOledViewWorkingHeat.h src/MyButton.h \
+ src/TemperatureStub.h lib/DHT/DHT.h src/MyServer.h \
+ lib/AsyncTCP-esphome-1.2.1/src/AsyncTCP.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/pbuf.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/err.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src/SPIFFS.h \

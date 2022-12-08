@@ -1,5 +1,7 @@
 .pio/build/esp32doit-devkit-v1/src/MyOledViewWifiAp.cpp.o: \
- src/MyOledViewWifiAp.cpp \
+ src/MyOledViewWifiAp.cpp src/MyOledViewWifiAp.h \
+ lib/Adafruit_SSD1306-2.4.7/Adafruit_SSD1306.h \
+ lib/Adafruit-GFX-Library-master/Adafruit_GFX.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp_arduino_version.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/FreeRTOS.h \
@@ -128,13 +130,10 @@
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/spi_flash/include/esp_spi_flash.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/spi_flash/include/esp_spi_flash_counters.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/soc/esp32/spiram.h \
- src/MyOledView.h lib/Adafruit_SSD1306-2.4.7/Adafruit_SSD1306.h \
- lib/Adafruit-GFX-Library-master/Adafruit_GFX.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/Print.h \
  lib/Adafruit-GFX-Library-master/gfxfont.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src/SPI.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal-spi.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src/Wire.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal.h \
- src/MyOledViewWifiAp.h src/MyOledView.h src/MyOled.h \
- lib/Adafruit_BusIO-master/Adafruit_I2CDevice.h
+ src/MyOledView.h lib/Adafruit_BusIO-master/Adafruit_I2CDevice.h

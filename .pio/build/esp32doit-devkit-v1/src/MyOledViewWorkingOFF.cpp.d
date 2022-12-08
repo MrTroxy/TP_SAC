@@ -128,7 +128,7 @@
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/spi_flash/include/esp_spi_flash.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/spi_flash/include/esp_spi_flash_counters.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/soc/esp32/spiram.h \
- src/MyOledView.h lib/Adafruit_SSD1306-2.4.7/Adafruit_SSD1306.h \
+ src/MyOledViewWorkingOFF.h lib/Adafruit_SSD1306-2.4.7/Adafruit_SSD1306.h \
  lib/Adafruit-GFX-Library-master/Adafruit_GFX.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/Print.h \
  lib/Adafruit-GFX-Library-master/gfxfont.h \
@@ -136,5 +136,4 @@
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal-spi.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src/Wire.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal.h \
- src/MyOledViewWorkingOFF.h src/MyOledViewWorking.h src/MyOledView.h \
- src/MyOled.h lib/Adafruit_BusIO-master/Adafruit_I2CDevice.h
+ src/MyOledViewWorking.h src/MyOledView.h

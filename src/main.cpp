@@ -41,7 +41,17 @@
             std::string get_random_string(unsigned int len)
 
     Classes du système
-         
+        MYOLED/
+                    MyOled.cpp              V1.1    Gestion d'un écran Oled Utilisant un GPIO d'un contrôleur
+                    MyOledView              V1.1    Gestion d'une VUE pour le OLed  
+                    MyOledViewErrorWifiConnexion     V1.2
+                    MyOledViewInitialisation         V1.2
+                    MyOledViewWorkingWifiAp                 V1.2
+                    MyOledViewWorking
+                    MyOledViewWorkingOff
+                    MyOledViewWorkingCold
+                    MyOledViewWorkingHeat
+
         MyServer                        V1.0    Pour la gestion des routes pour le site WEB
             /data                               Répertoire qui contient les fichiers du site WEB 
                 index.html              V1.0    Page index du site WEB
@@ -68,7 +78,7 @@ WiFiManager wm;
 #include <Wire.h>
 #include <MyOled.h>
 #include <MyOledView.h>
-#include <MyOledViewWifiAp.h>
+#include <MyOledViewWorkingWifiAp.h>
 #include <MyOledViewErrorWifiConnexion.h>
 #include <MyOledViewWorking.h>
 #include <MyOledViewInitialisation.h>
@@ -77,10 +87,32 @@ WiFiManager wm;
 #include <MyOledViewWorkingCold.h>
 #include <MyOledViewWorkingHeat.h>
 
+MyOledViewInitialisation *viewIni = NULL;
+MyOledViewWorkingWifiAp *viewWifi = NULL;
+MyOledViewErrorWifiConnexion *viewErrorWifi = NULL;
+MyOledViewWorking *viewWorking = NULL;
+MyOledViewWorkingOFF *viewWorkingOFF = NULL;
+MyOledViewWorkingCOLD *viewWorkingCOLD = NULL;
+MyOledViewWorkingHEAT *viewWorkingHEAT = NULL;
+
 //Définition des trois leds de statut
 #define GPIO_PIN_LED_YELLOW   12 // Led jaune sur la pin GPIO12
 #define GPIO_PIN_LED_GREEN     14 // Led verte sur la pin GPIO14
 #define GPIO_PIN_LED_RED  27 // Led rouge sur la pin GPIO27
+
+// ------------------ Gestion boutons ----------------------
+
+#include "MyButton.h"
+MyButton *myButtonAction = NULL;
+MyButton *myButtonReset = NULL;
+
+// ---------------------- Bool sur le fonctionnement du four ---------------------------------------
+
+// permet de savoir si le Four est en marche
+boolean demarre = false;
+// permet à la page web de savoir quel est le status de l'esp
+string status = "null";
+
 
 #include "WiFi.h"
 
