@@ -39,7 +39,6 @@ void MyOledViewWorking::update(Adafruit_SSD1306 *adafruit){
     }
 
 void MyOledViewWorking::display( Adafruit_SSD1306 *adafruit) {
-    Serial.println("MyOledViewWorking");
     adafruit->setTextColor(WHITE);
 
     adafruit->clearDisplay();

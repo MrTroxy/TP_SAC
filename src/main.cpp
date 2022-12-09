@@ -137,13 +137,11 @@ MyButton *myButtonReset = NULL;
 
 // ---------------------- Bool sur le fonctionnement du four ---------------------------------------
 boolean demarre = false; // permet de savoir si le Four est en marche
-string status = "null"; // permet a l'esp et au site de savoir quel est le status du four
+bool redLedIsOn = false;
+bool greenLedIsOn = false;
+bool yellowLedIsOn = false;
+string status = "Off"; // permet a l'esp et au site de savoir quel est le status du four
 int timer = 0; // permet de gérer le délais dans la fonction loop
-
-// ------------------- Valeur envoyées par le service WEB ------------------------------------------
-string duree = "null";
-float temperatureFloat;
-int dureeInt;
 
 // ------------------- Pour l'affichage OLED  ------------------------------------------
 MyOled *myOled = NULL;
@@ -216,12 +214,8 @@ void displayStateOled()
     delay(10);
     sprintf(strTemperature, "%g", temperature);
 
-    if (isEqualString(status.c_str(), string("Off")))
+    if (status == "Off")
     {
-        digitalWrite(GPIO_PIN_LED_GREEN, LOW);
-        digitalWrite(GPIO_PIN_LED_YELLOW, LOW);
-        digitalWrite(GPIO_PIN_LED_RED, HIGH);
-
         myOledViewWorkingOFF = new MyOledViewWorkingOFF();
         myOledViewWorkingOFF->setParams("nomDuSysteme", nomSysteme);
         myOledViewWorkingOFF->setParams("idDuSysteme", idDuSysteme);
@@ -229,14 +223,11 @@ void displayStateOled()
         myOledViewWorkingOFF->setParams("ipDuSysteme", WiFi.localIP().toString().c_str());
         myOled->displayView(myOledViewWorkingOFF);
         currentTemperatureDisplayed = temperature;
+        Serial.println("Display State OFF");
     }
 
-    if (isEqualString(status.c_str(), string("Cold")))
+    if (status == "Cold")
     {
-        digitalWrite(GPIO_PIN_LED_YELLOW, LOW);
-        digitalWrite(GPIO_PIN_LED_RED, LOW);
-        digitalWrite(GPIO_PIN_LED_GREEN, HIGH);
-
         myOledViewWorkingCOLD = new MyOledViewWorkingCOLD();
         myOledViewWorkingCOLD->setParams("nomDuSysteme", nomSysteme);
         myOledViewWorkingCOLD->setParams("idDuSysteme", idDuSysteme.c_str());
@@ -244,14 +235,11 @@ void displayStateOled()
         myOledViewWorkingCOLD->setParams("ipDuSysteme", WiFi.localIP().toString().c_str());
         myOled->displayView(myOledViewWorkingCOLD);
         currentTemperatureDisplayed = temperature;
+        Serial.println("Display State COLD");
     }
 
-    if(isEqualString(status.c_str(), string("Heat")))
+    if(status == "Heat")
     {
-        digitalWrite(GPIO_PIN_LED_GREEN, LOW);
-        digitalWrite(GPIO_PIN_LED_RED, LOW);
-        digitalWrite(GPIO_PIN_LED_YELLOW, HIGH);
-
         myOledViewWorkingHEAT = new MyOledViewWorkingHEAT();
         myOledViewWorkingHEAT->setParams("nomDuSysteme", nomSysteme);
         myOledViewWorkingHEAT->setParams("idDuSysteme", idDuSysteme);
@@ -259,6 +247,7 @@ void displayStateOled()
         myOledViewWorkingHEAT->setParams("ipDuSysteme", WiFi.localIP().toString().c_str());
         myOled->displayView(myOledViewWorkingHEAT);
         currentTemperatureDisplayed = temperature;
+        Serial.println("Display State HEAT");
     }
 }
 
@@ -372,7 +361,7 @@ void setup()
  
 void loop()
 {
-    if (timer % 1000)
+    if (timer % 1000 == 0)
     {
         // -----------Gestion du bouton Action-----------
         int buttonAction = myButtonAction->checkMyButton();
@@ -392,7 +381,39 @@ void loop()
         // ----------- Gestion du display, température-----------
         float temperatureTMP = temperatureStub->getTemperature();
 
-        displayStateOled();
+        if (status == "Off" && !redLedIsOn)
+        {
+            redLedIsOn = true;
+            yellowLedIsOn = false;
+            greenLedIsOn = false;
+            digitalWrite(GPIO_PIN_LED_GREEN, LOW);
+            digitalWrite(GPIO_PIN_LED_YELLOW, LOW);
+            digitalWrite(GPIO_PIN_LED_RED, HIGH);
+            displayStateOled();
+        }
+        if (status == "Heat" && !yellowLedIsOn)
+        {
+            yellowLedIsOn = true;
+            redLedIsOn = false;
+            greenLedIsOn = false;
+            digitalWrite(GPIO_PIN_LED_GREEN, LOW);
+            digitalWrite(GPIO_PIN_LED_YELLOW, HIGH);
+            digitalWrite(GPIO_PIN_LED_RED, LOW);
+            displayStateOled();
+        }
+        if (status == "Cold" && !greenLedIsOn)
+        {
+            greenLedIsOn = true;
+            yellowLedIsOn = false;
+            redLedIsOn = false;
+            digitalWrite(GPIO_PIN_LED_GREEN, HIGH);
+            digitalWrite(GPIO_PIN_LED_YELLOW, LOW);
+            digitalWrite(GPIO_PIN_LED_RED, LOW);
+            displayStateOled();
+        }
+
+        Serial.println("Passage dans le loop");
+        Serial.println("Status actuel : " + String(status.c_str()));
     }
     timer += 10;
     delay(10);

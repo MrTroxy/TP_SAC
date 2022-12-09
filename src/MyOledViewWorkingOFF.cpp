@@ -13,7 +13,8 @@ using namespace std;
 void MyOledViewWorkingOFF::display(Adafruit_SSD1306 *adafruit){
 
     MyOledViewWorking::display(adafruit);
-
+    
+    adafruit->clearDisplay();
     adafruit->setTextSize(1);
     adafruit->setCursor(70,20);
     adafruit->print("Ready");
