@@ -382,7 +382,6 @@ void loop()
     float temperatureTMP = temperatureStub->getTemperature();
     
     delay(1000);
-
     // if (!demarre)
     // {
     //     status = "off";
