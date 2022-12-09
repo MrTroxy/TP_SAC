@@ -1,7 +1,7 @@
 /**
     Class MyButton : Gestion de la température (senseur) STUB
     @file MyButton.h 
-    @author David Tremblay
+    @author Alain Dubé
     @version 1.0 17/03/21  
     
     Historique des versions   

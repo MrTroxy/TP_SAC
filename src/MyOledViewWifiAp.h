@@ -1,30 +1,47 @@
- #include <Adafruit_SSD1306.h>
- #include <string> 
- #include "MyOledView.h"
+/* Copyright (C) 2021 Alain Dube
+ * All rights reserved.
+ *
+ * Projet Sac
+ * Ecole du Web
+ * Cours Objets connectés (c)2021
+ *  
+    @file     MyOledViewWifiAp.cpp
+    @author   David Tremblay
+    @version  1.1 22/11/25
 
-#ifndef MYOLEDVIEWWORKINGWIFIAP_H
-#define MYOLEDVIEWWORKINGWIFIAP_H
+    Historique des versions
+           Version    Date       Auteur       Description
+           1.1        25/11/22  Samuel       Première version du logiciel
 
- class MyOledViewWorkingWifiAP : public MyOledView{
 
-    public :
+    platform = espressif32
+    board = esp32doit-devkit-v1
+    framework = arduino
+*/
 
-      void display( Adafruit_SSD1306 *adafruit);
-    void update(Adafruit_SSD1306 *adafruit);
-       void setNomDuSysteme(std::string val);
-       void setSsIDDuSysteme(std::string val);
-       void setpassDuSysteme(std::string val);
+#ifndef MYOLEDVIEWWIFIAP_H
+#define MYOLEDVIEWWIFIAP_H
+
+#include <Adafruit_SSD1306.h>
+#include "MyOledView.h"
+#include <string>
+#include <vector>
+using std::vector;
+
+class MyOledViewWifiAp: public MyOledView {
+    
+    public:
+        void setNomDuSysteme(std::string val);
+        void setSsIDDuSysteme(std::string val);
+        void setPassDuSysteme(std::string val);
 
     private:
-     
-        std::string NomDuSysteme;
-        std::string IdDuSysteme; 
+        std::string nomDuSysteme;
+        std::string ssIDDuSysteme;
         std::string passDuSysteme;
 
-         //virtual void update(Adafruit_SSD1306 *adafruit) = 0;
-         //virtual void display( Adafruit_SSD1306 *adafruit) = 0;
-
-
- };
-
- #endif
+        void display(Adafruit_SSD1306 *adafruit);
+        void update(Adafruit_SSD1306 *adafruit);
+      
+};
+#endif

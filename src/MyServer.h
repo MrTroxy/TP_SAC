@@ -1,8 +1,8 @@
 /**
     Class MyServer :  Pour la gestion des routes pour le site WEB
     @file MyServer.h 
-    @author David Tremblay
-    @version 1.1 17/11/2022
+    @author Alain Dubé
+    @version 1.1 21/09/20 
     
     Historique des versions   
                             Versions  Date      Auteur      Description

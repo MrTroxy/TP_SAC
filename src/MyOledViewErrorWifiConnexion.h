@@ -2,7 +2,7 @@
     Class MyOledViewErrorWifiConnexion : Gestion d'une VUE pour le OLed
     @file MyOledViewErrorWifiConnexion.h 
     @author David Tremblay
-    @version 1.1 2022-12-01 
+    @version 1.1 21/11/30 
     
                             
     platform = espressif32

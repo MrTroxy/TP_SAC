@@ -1,5 +1,5 @@
-.pio/build/esp32doit-devkit-v1/src/MyOledViewWorkingHEAT.cpp.o: \
- src/MyOledViewWorkingHEAT.cpp \
+.pio/build/esp32doit-devkit-v1/src/MyOledViewWorkingHeat.cpp.o: \
+ src/MyOledViewWorkingHeat.cpp \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp_arduino_version.h \
  C:/Users/MrTroxy/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/FreeRTOS.h \

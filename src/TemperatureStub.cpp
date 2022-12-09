@@ -1,7 +1,7 @@
 /**
     Gestion de la température du Four (STUB)
     @file TemperatureStub.cpp
-    @author David Tremblay
+    @author Alain Dubé
     @version 1.0 17/03/21  
 */
 

@@ -1,11 +1,21 @@
+/*****************************************************
+ * Fichier: script.js
+ * Description: Fichier Javascript du projet
+ * Date: 18/11/22
+ * Auteur: David Tremblay
+ * version : 1.6
+ * ---------------------------------------------------
+ */
+
 var boisChoisi;
 var temperature;
 
+// --------------------- Fonction GET qui permet d'afficher la liste des bois dans le select -----------
 
-// Fonction qui permet d'obtenir le nom du système (actualisée toutes les secondes)
-
-// Appel un GET sur le serveur pour récupérer des données d'un API REST | Fonction getAllWood
 window.addEventListener("load", getAllWoodOptions());
+window.addEventListener("load", setEtatFour("Off"));
+window.addEventListener("load", getNomFour());
+window.addEventListener("load", getFromEsp_TemperatureSensor());
 function getAllWoodOptions()
 {
     var xhttp = new XMLHttpRequest();
@@ -21,7 +31,7 @@ function getAllWoodOptions()
                         var nomBois = description[i].name;
                         var idBois = description[i].id;
                         document.getElementById("typeBois_ListBox_Select").innerHTML += "<option value='" + idBois + "'>" + nomBois + "</option>";
-                        document.getElementById("typeBois_ListBox_Select").style.color = "red";
+                        document.getElementById("typeBois_ListBox_Select").style.color = "black";
                     }
                     
                     document.getElementById("typeBois_ListBox_Select").addEventListener("change", getCaracteristiqueBois);
@@ -33,8 +43,14 @@ function getAllWoodOptions()
     xhttp.open("GET", "getAllWoodOptions", true);
     xhttp.send();
 }
+//-------------------Fonction getTemperatureSensor---------------------
 
-setInterval(function getFromEsp_TemperatureSensor()
+setInterval(function()
+{
+    getFromEsp_TemperatureSensor();
+}, 2000);
+
+function getFromEsp_TemperatureSensor()
 {
     var xhttp = new XMLHttpRequest();
    
@@ -48,25 +64,26 @@ setInterval(function getFromEsp_TemperatureSensor()
     };
     xhttp.open("GET", "getTemperatureSensor", true);
     xhttp.send();
-}, 3000);
+}
 
-    // Demande le nom du système afin de l’afficher dans la vue HTML
+// Demande le nom du système afin de l’afficher dans la vue HTML
 
-    // function getFromESP_getNom () {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function () {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //     document.getElementById("nom").innerHTML = this.responseText;
-    //     }
-    //     };
-    //     xhttp.open("GET", "getNomEsp", true);
-    //     xhttp.send();
-    //    }
+function getNomFour()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            document.getElementById("nomFour").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("GET", "getNomFour", true);
+    xhttp.send();
+}
 
 
-       // Fonction récupérer les infos de l'API Bois
-
-// Fonction qui permet d'afficher les caractéristiques du bois choisi en envoyant un GET sur le serveur avec le nom du bois choisi
+// --------------------- Fonction GET qui permet d'afficher les caractéristiques du bois -----------
 function getFromESP_getWoodCaracteristique()
 {
     var xhttp = new XMLHttpRequest();
@@ -102,6 +119,7 @@ function getFromESP_getWoodCaracteristique()
             }
             document.getElementById("caracteristiquesBois").style.display = "block";
             document.getElementById("cercleStatut").style.backgroundColor = "red";
+            setEtatFour("Off");
         }
     };
 
@@ -112,7 +130,7 @@ function getFromESP_getWoodCaracteristique()
     xhttp.send(params);
 }
 
-// Fonction pour démarrer le compte à rebour du four
+// ----------------- Fonction Démarrage du Four à bois ----------------------
 
 function demarrageFour()
 {
@@ -134,7 +152,10 @@ function demarrageFour()
         if (temp >= document.getElementById("sechage").textContent)
         {
             if (i == 0)
-            document.getElementById("cercleStatut").style.backgroundColor = "orange";
+            {
+                document.getElementById("cercleStatut").style.backgroundColor = "orange";
+                setEtatFour("Heat");
+            }
             var timer = setInterval(function()
             {
                     i++
@@ -144,8 +165,9 @@ function demarrageFour()
                     if (i == document.getElementById("temps").textContent || document.getElementById('four').clicked == true)
                     {
                         document.getElementById("cercleStatut").style.backgroundColor = "green";
+                        setEtatFour("Cold");
                         clearInterval(timer);
-                        alert("Le sechage est finit ! ");
+                        setTimeout(function() { alert("Le sechage est finit ! "); }, 100);
                     }
                     else if (document.getElementById('four').clicked == true)
                     {
@@ -160,3 +182,10 @@ function demarrageFour()
     }
 
 };
+// ----------------- Fonction setInterval pour recuperer le status du four  ----------------------
+
+function setEtatFour(etat) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "setEtatFour?etat=" + etat, true);    
+    xhttp.send();
+}

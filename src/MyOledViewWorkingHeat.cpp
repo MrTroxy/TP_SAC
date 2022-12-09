@@ -1,7 +1,7 @@
 /**
     Gestion d'une VUE pour le OLed  
     @file MyOledViewWorkingHEAT.cpp
-    @author Alex De Souza
+    @author David Tremblay
     @version 1.1 20/11/22 
 */
 
