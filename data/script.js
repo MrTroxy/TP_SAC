@@ -2,7 +2,7 @@
  * Fichier: script.js
  * Description: Fichier Javascript du projet
  * Date: 18/11/22
- * Auteur: David Tremblay
+ * Auteur: David Tremblay et Samuel Gassama
  * version : 1.6
  * ---------------------------------------------------
  */
@@ -11,11 +11,11 @@ var boisChoisi;
 var temperature;
 
 // --------------------- Fonction GET qui permet d'afficher la liste des bois dans le select -----------
-
 window.addEventListener("load", getAllWoodOptions());
 window.addEventListener("load", setEtatFour("Off"));
 window.addEventListener("load", getNomFour());
 window.addEventListener("load", getFromEsp_TemperatureSensor());
+
 function getAllWoodOptions()
 {
     var xhttp = new XMLHttpRequest();
@@ -43,8 +43,8 @@ function getAllWoodOptions()
     xhttp.open("GET", "getAllWoodOptions", true);
     xhttp.send();
 }
-//-------------------Fonction getTemperatureSensor---------------------
 
+//-------------------Fonction getTemperatureSensor---------------------
 setInterval(function()
 {
     getFromEsp_TemperatureSensor();
@@ -67,7 +67,6 @@ function getFromEsp_TemperatureSensor()
 }
 
 // Demande le nom du système afin de l’afficher dans la vue HTML
-
 function getNomFour()
 {
     var xhttp = new XMLHttpRequest();
@@ -182,8 +181,7 @@ function demarrageFour()
     }
 
 };
-// ----------------- Fonction setInterval pour recuperer le status du four  ----------------------
-
+// ----------------- Fonction pour set le status du four actuel dans le main ----------------------
 function setEtatFour(etat) {
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "setEtatFour?etat=" + etat, true);    

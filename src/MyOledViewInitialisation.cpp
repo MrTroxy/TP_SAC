@@ -6,7 +6,7 @@
  * Cours Objets connectés (c)2021
  *  
     @file     MyOledViewInitialisation.cpp
-    @author   David Tremblay
+    @author   David Tremblay et Samuel Gassama
     @version  1.1 21/08/15 
 
     Historique des versions

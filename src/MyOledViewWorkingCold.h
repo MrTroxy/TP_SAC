@@ -1,12 +1,12 @@
 /**
     Class MyOledViewWorkingCOLD : Gestion d'une VUE pour le OLed
     @file MyOledViewWorkingCOLD.h 
-    @author David Tremblay
+    @author David Tremblay et Samuel Gassama
     @version 1.1 24/11/22 
     
     Historique des versions   
                             Versions  Date      Auteur      Description
-                            1.1      17/11/22    David Tremblay        Première version de la classe
+                            1.1      17/11/22    David Tremblay et Samuel Gassama        Première version de la classe
                             
                             
     platform = espressif32

@@ -6,13 +6,13 @@
  * Cours Objets connectés (c)2022
  *  
     @file     main.cpp
-    @author   David Tremblay
+    @author   David Tremblay et Samuel Gassama
     @version  2.0 09/12/2022
 
     Historique des versions
-           Version      Date            Auteur           Description
-           1.0        17/11/2022    David Tremblay       Première version du logiciel
-           2.0        09/12/2022    David Tremblay       Version finale du logiciel
+           Version      Date                Auteur                                   Description
+           1.0        17/11/2022    David Tremblay et Samuel Gassama       Première version du logiciel
+           2.0        09/12/2022    David Tremblay et Samuel Gassama       Version finale du logiciel
 
     platform = espressif32
     board = esp32doit-devkit-v1
@@ -122,9 +122,7 @@ WiFiServer server(80);
 #define DHTTYPE DHT22  //Le type de senseur utilisé (mais ce serait mieux d'avoir des DHT22 pour plus de précision)
 TemperatureStub *temperatureStub = NULL;
 float temperature;
-int currentTemperatureDisplayed = 0;
 char strTemperature[128];
-float temperatureActuelle = 0.0;
 
 #define nomSysteme "SAC System" 
 string idDuSysteme = "1337";
@@ -150,7 +148,6 @@ MyOled *myOled = NULL;
 #define OLED_RESET 4          // Reset pin # (or -1 if sharing Arduino reset pin)
 #define OLED_I2C_ADDRESS 0x3C // Adresse I2C de l'écran Oled
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
-int frame_delay = 15;
 
 //------------------------ Serveur ESP32 -----------------------------
 #include "MyServer.h"
@@ -222,8 +219,6 @@ void displayStateOled()
         myOledViewWorkingOFF->setParams("temperature", strTemperature);
         myOledViewWorkingOFF->setParams("ipDuSysteme", WiFi.localIP().toString().c_str());
         myOled->displayView(myOledViewWorkingOFF);
-        currentTemperatureDisplayed = temperature;
-        Serial.println("Display State OFF");
     }
 
     if (status == "Cold")
@@ -234,8 +229,6 @@ void displayStateOled()
         myOledViewWorkingCOLD->setParams("temperature", strTemperature);
         myOledViewWorkingCOLD->setParams("ipDuSysteme", WiFi.localIP().toString().c_str());
         myOled->displayView(myOledViewWorkingCOLD);
-        currentTemperatureDisplayed = temperature;
-        Serial.println("Display State COLD");
     }
 
     if(status == "Heat")
@@ -246,8 +239,6 @@ void displayStateOled()
         myOledViewWorkingHEAT->setParams("temperature", strTemperature);
         myOledViewWorkingHEAT->setParams("ipDuSysteme", WiFi.localIP().toString().c_str());
         myOled->displayView(myOledViewWorkingHEAT);
-        currentTemperatureDisplayed = temperature;
-        Serial.println("Display State HEAT");
     }
 }
 
@@ -411,9 +402,6 @@ void loop()
             digitalWrite(GPIO_PIN_LED_RED, LOW);
             displayStateOled();
         }
-
-        Serial.println("Passage dans le loop");
-        Serial.println("Status actuel : " + String(status.c_str()));
     }
     timer += 10;
     delay(10);

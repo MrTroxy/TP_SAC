@@ -1,7 +1,7 @@
 /**
     Gestion d'une VUE pour le OLed  
     @file MyOledViewWorkingOFF.cpp
-    @author David Tremblay
+    @author David Tremblay et Samuel Gassama
     @version 1.1 20/11/22 
 */
 
